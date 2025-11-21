@@ -2,8 +2,36 @@
 using std::cin;
 using std::cout;
 
-void get_numbers(short** table,short rows,short columns) { // получаем базовые значения в таблицу
+void get_i_with_zeros(short** table, short* zeros, short rows, short columns, short& k) {
+	for (short i = 0; i < rows; ++i) {
+		for (short j = 0; j < columns; ++j) {
+			if (table[i][j] == 0) {
+				zeros[k] = i;
+				++k;
+			}
+		}
+	}
+}
+void see(short** table, short rows, short columns) {
+	for (short i = 0; i < rows; ++i) { // посмотреть, что там
+		cout << '\n';
+		for (short j = 0; j < columns; ++j) {
+			cout << table[i][j] << ' ';
+		}
+	}
+	cout << '\n';
+}
+
+int main() {
+	short rows = 2;
+	short columns = 2;
+
+	short** table = (short**)calloc(rows,sizeof(short*)); // строки таблиицы
 	for (short i = 0; i < rows; i++) {
+		table[i] = (short*)malloc(columns*sizeof(short)); // в каждой ячейке строки по столбцу
+	}
+
+	for (short i = 0; i < rows; i++) { // получаем значения
 		for (short j = 0; j < columns; j++) {
 			switch (i) {
 			case 0: // значения первой строки положительные
@@ -17,39 +45,10 @@ void get_numbers(short** table,short rows,short columns) { // получаем базовые з
 			}
 		}
 	}
-}
-void get_i_with_zeros(short** table, short* zeros, short rows, short columns, short k) {
-	for (short i = 0; i < rows; ++i) {
-		for (short j = 0; j < columns; ++j) {
-			if (table[i][j] == 0) {
-				zeros[k] = i;
-				++k;
-			}
-		}
-	}
-}
 
-int main() {
-	short rows = 2;
-	short columns = 2;
+	see(table, rows, columns);
 
-	short** table = (short**)calloc(rows,sizeof(short*)); // строки таблиицы
-	for (short i = 0; i < rows; i++) {
-		table[i] = (short*)malloc(columns*sizeof(short)); // в каждой ячейке строки по столбцу
-	}
-
-	get_numbers(table, rows,columns);
-
-	for (short i = 0; i < rows; i++) { // посмотрим, что там у нас лежит
-		cout << '\n';
-		for (short j = 0; j < columns; j++) {
-			cout << table[i][j] << ' ';
-		}
-	}
-	cout << '\n';
-
-	short a = table[0][0]; short b = table[0][1]; short c = table[1][0]; short d = table[1][1];
-	short new_rows = a + rows, new_columns = b + columns;
+	short new_rows = table[0][0] + rows, new_columns = table[0][1] + columns;
 
 	short** temp = (short**)realloc(table, new_rows * sizeof(short*)); //обозначить большее кол-во строк
 	table = temp;
@@ -61,31 +60,24 @@ int main() {
 		table[i] = (short*)calloc(new_columns, sizeof(short));
 	}
 
-	for (short i = 0; i < new_rows; ++i) { // посмотреть, что там
-		cout << '\n';
-		for (short j = 0; j < new_columns; ++j) {
-			cout << table[i][j] << ' ';
-		}
-	}
-	cout << '\n';
+	see(table, new_rows, new_columns);
 
+	table[new_rows - 2][new_columns - 2] = table[0][0]; //a
+	table[new_rows - 2][new_columns - 1] = table[0][1]; //b
+	table[new_rows - 1][new_columns - 2] = table[1][0]; //c
+	table[new_rows - 1][new_columns - 1] = table[1][1]; //d
 	for (short i = 0; i < new_rows; ++i) { // заполняем таблицу
 		for (short j = 0; j < new_columns; ++j) {
-			table[i][j] = c*i + d*j;
+			if ((i == new_rows - 1 and (j == new_columns - 1 or j == new_columns - 2)) or (i == new_rows - 2 and (j == new_columns - 1 or j == new_columns - 2))) {
+				continue;
+			}
+			else {
+				table[i][j] = table[new_rows - 1][new_columns - 2] * i + table[new_rows - 1][new_columns - 1] * j;
+			}
 		}
 	}
-	table[new_rows-2][new_columns-2] = a;
-	table[new_rows-2][new_columns-1] = b;
-	table[new_rows-1][new_columns-2] = c;
-	table[new_rows-1][new_columns-1] = d;
 
-	for (short i = 0; i < new_rows; ++i) { // ещё раз посмотреть, что там
-		cout << '\n';
-		for (short j = 0; j < new_columns; ++j) {
-			cout << table[i][j] << ' ';
-		}
-	}
-	cout << '\n';
+	see(table, new_rows, new_columns);
 
 	short k = 0;
 	short* zeros = (short*)calloc(new_rows,sizeof(short)); // получаем индесы строк с 0 в них
@@ -93,36 +85,27 @@ int main() {
 	for (short i = 0; i < new_rows; ++i) { // чекаем
 		cout << zeros[i] << ' ';
 	}
+	cout << '\n';
 
-	for (short y = 0; y < k; ++y) {
-		for (short i = new_rows; i > 0; --i) {
-
-		}
+	for (short y = k; y >= 0; --y) {
+		for (short i = zeros[y]; i < new_rows-1; ++i) {
+			for (short ij = zeros[y]+1; ij < new_rows; ++ij) {
+				short* t = table[i];
+				table[i] = table[ij];
+				table[ij] = t;
+			}
+			
+		}		
 	}
-	//short** changed_table_parameters = (short**)calloc((2 + a), sizeof(short*)); // создание копии
-	//for (short i = 0; i < 2+a; i++) {
-	//	changed_table_parameters[i] = (short*)malloc((2 + b)* sizeof(short));
-	//}
-	//for (short i = 0; i < 2 + a; i++) { //заполнение копии
-	//	for (short j = 0; j < 2 + b; j++) {
-	//		changed_table_parameters[i][j] = (i * c) + (j * d);
-	//	}
-	//}
-	//changed_table_parameters[2 + a-1][2 + b-1] = d;
-	//changed_table_parameters[1 + a-1][2 + b-1] = b;
-	//changed_table_parameters[2 + a-1][1 + b-1] = c;
-	//changed_table_parameters[1 + a-1][1 + b-1] = a;
+	/*new_rows -= k;
+	table = (short**)realloc(table, new_rows * sizeof(short*));*/
+	
 
-	//for (short i = 0; i < 2 + a; i++) { // проверка, что там
-	//	cout << '\n';
-	//	for (short j = 0; j < 2 + b; j++) {
-	//		cout << changed_table_parameters[i][j] << ' ';
-	//	}
-	//}
-	//cout << '\n';
+	see(table, new_rows, new_columns);
 
-	for (short i = 0; i < 2; i++) {
+	for (short i = 0; i < new_rows; i++) {
 		free(table[i]);
 	}
 	free(table);
+	free(zeros);
 }

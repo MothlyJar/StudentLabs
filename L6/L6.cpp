@@ -2,12 +2,13 @@
 using std::cin;
 using std::cout;
 
-void get_i_with_zeros(short** table, short* zeros, short rows, short columns, short& k) {
+void get_i_with_zeros(short** table, short* zeros, short rows, short columns, short& k) { // создать прям тут масив zeros
 	for (short i = 0; i < rows; ++i) {
 		for (short j = 0; j < columns; ++j) {
 			if (table[i][j] == 0) {
 				zeros[k] = i;
 				++k;
+				break;
 			}
 		}
 	}
@@ -50,11 +51,9 @@ int main() {
 
 	short new_rows = table[0][0] + rows, new_columns = table[0][1] + columns;
 
-	short** temp = (short**)realloc(table, new_rows * sizeof(short*)); //обозначить большее кол-во строк
-	table = temp;
+	table = (short**)realloc(table, new_rows * sizeof(short*)); //обозначить большее кол-во строк
 	for (short i = 0; i < rows; ++i) {
-		temp[i] = (short*)realloc(table[i], new_columns * sizeof(short)); // добавить колонки к тем строкам, которые уже были
-		table[i] = temp[i];
+		table[i] = (short*)realloc(table[i], new_columns * sizeof(short)); // добавить колонки к тем строкам, которые уже были
 	}
 	for (short i = rows; i < new_rows; ++i) { // выделить место для колонок в совсем новых строках 
 		table[i] = (short*)calloc(new_columns, sizeof(short));
@@ -87,9 +86,9 @@ int main() {
 	}
 	cout << '\n';
 
-	for (short y = k; y >= 0; --y) {
+	for (short y = k; y >= 0; y--) {
 		for (short i = zeros[y]; i < new_rows-1; ++i) {
-			for (short ij = zeros[y]+1; ij < new_rows; ++ij) {
+			for (short ij = i+1; ij < new_rows; ++ij) {
 				short* t = table[i];
 				table[i] = table[ij];
 				table[ij] = t;
@@ -108,4 +107,17 @@ int main() {
 	}
 	free(table);
 	free(zeros);
+	//----------------------------------------------------------------------------------
+	cout << '\n' << "Pt2\n";
+	short* ai = new short;
+	short* bi = new short;
+	cin >> *ai >> *bi;
+	*ai *= 2;
+	cout << *ai << ' ' << * bi << '\n';
+	short t = *ai;
+	*ai = *bi;
+	*bi = t;
+	cout << *ai << ' ' << *bi;
+	delete ai;
+	delete bi;
 }

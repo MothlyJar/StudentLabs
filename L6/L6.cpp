@@ -2,7 +2,8 @@
 using std::cin;
 using std::cout;
 
-void get_i_with_zeros(short** table, short* zeros, short rows, short columns, short& k) { // создать прям тут масив zeros
+short* get_i_with_zeros(short** table, short rows, short columns, short& k) { // создать прям тут масив zeros
+	short* zeros = (short*)calloc(rows, sizeof(short));
 	for (short i = 0; i < rows; ++i) {
 		for (short j = 0; j < columns; ++j) {
 			if (table[i][j] == 0) {
@@ -12,6 +13,7 @@ void get_i_with_zeros(short** table, short* zeros, short rows, short columns, sh
 			}
 		}
 	}
+	return zeros;
 }
 void see(short** table, short rows, short columns) {
 	for (short i = 0; i < rows; ++i) { // посмотреть, что там
@@ -79,14 +81,23 @@ int main() {
 	see(table, new_rows, new_columns);
 
 	short k = 0;
-	short* zeros = (short*)calloc(new_rows,sizeof(short)); // получаем индесы строк с 0 в них
-	get_i_with_zeros(table, zeros, new_rows, new_columns, k);
+	short* zeros = get_i_with_zeros(table, new_rows, new_columns, k);
 	for (short i = 0; i < new_rows; ++i) { // чекаем
 		cout << zeros[i] << ' ';
 	}
 	cout << '\n';
 
-	for (short y = k; y >= 0; y--) {
+	for (short current_i_with_zero = k; current_i_with_zero > 0; --current_i_with_zero) {
+		for (short i = zeros[current_i_with_zero]; i < new_rows - 1; ++i) {
+			for (short i_next = i + 1; i_next < new_rows; ++i_next) {
+				short* temp = table[i];
+				table[i] = table[i_next];
+				table[i_next] = temp;
+			}
+		}
+	}
+
+	/*for (short y = k; y >= 0; y--) {
 		for (short i = zeros[y]; i < new_rows-1; ++i) {
 			for (short ij = i+1; ij < new_rows; ++ij) {
 				short* t = table[i];
@@ -95,9 +106,10 @@ int main() {
 			}
 			
 		}		
-	}
-	/*new_rows -= k;
-	table = (short**)realloc(table, new_rows * sizeof(short*));*/
+	}*/
+	
+	new_rows -= k;
+	table = (short**)realloc(table, new_rows * sizeof(short*));
 	
 
 	see(table, new_rows, new_columns);
@@ -117,7 +129,7 @@ int main() {
 	short t = *ai;
 	*ai = *bi;
 	*bi = t;
-	cout << *ai << ' ' << *bi;
+	cout << *ai << ' '  << *bi;
 	delete ai;
 	delete bi;
 }

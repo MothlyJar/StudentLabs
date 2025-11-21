@@ -87,7 +87,7 @@ int main() {
 	}
 	cout << '\n';
 
-	// Ввод 2 3 1 5 и 2 3 -2 2, 3 3 1 5 делает норм, но вот уже с 3 3 -2 2 - нет
+	// Ввод 2 3 1 5 и 2 3 -2 2, 3 3 1 5 делает норм, но вот уже с 3 3 -2 2 - нет. Как-то зажёвывает одну строку при замене мб
 	for (short current_i_with_zero = k; current_i_with_zero > 0; --current_i_with_zero) {
 		for (short i = zeros[current_i_with_zero]; i < new_rows - 1; ++i) {
 			for (short i_next = i + 1; i_next < new_rows; ++i_next) {

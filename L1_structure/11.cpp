@@ -1,6 +1,6 @@
-
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 struct Option { 
@@ -18,10 +18,10 @@ void option_print(Option opts[], int n, int start) {
 class Potion {
 private:
     const float relative_zero = 0.001;
-    const int amount_of_bases = 8;
 
     string label_;
     string description_;
+    vector <string> ingredients_;
     float volume_;
     int price_;
     int type_; 
@@ -36,26 +36,30 @@ private:
         {"Head of Cerberus",6},
         {"Set of unknown mushrooms",7}
     };
+    const int amount_of_bases = sizeof(bases)/sizeof(bases[0]);
 ;
 public:
     Potion() { //базовый
         label_ = "Untitled";
         description_ = "Empty bottle.";
+        ingredients_.push_back(bases[0].description);
         volume_ = relative_zero;
-        price_ = 0.1;
+        price_ = 1;
         type_ = 0;
         cout << "[construct] You took an empty bottle.\n";
     }
     Potion(const Potion& other) { // копирование
         label_ = other.label_;
         description_ = other.description_;
+        ingredients_ = other.ingredients_;
         volume_ = other.volume_;
         price_ = other.price_;
         type_ = other.type_;
         cout << "[construct] You brewed exactly the same potion as before.\n";
     }
-    Potion(string label, string descriprion, int type_of_base, float volume, int price) : //полного заполнения
-        label_(label), description_(descriprion), volume_(volume), price_(price) { 
+    Potion(string label, string descriprion, int type_of_base, vector <string> ingredients, float volume, int price) : //полного заполнения
+        label_(label), description_(descriprion), ingredients_(ingredients), volume_(volume), price_(price) {
+        ingredients_.push_back(bases[type_of_base].description);
         cout << "[construct] You brewed new potion.\n";
     }
     ~Potion() {
@@ -77,6 +81,8 @@ public:
             throw invalid_argument("There're no such a base in our basement.");
         }
         else {
+            ingredients_.pop_back();
+            ingredients_.push_back(bases[t].description);
             type_ = t;
             volume_ += 0.3;
             cout << "You added " << bases[type_].description << " into your cattle. Now you have different potion.\n";
@@ -89,6 +95,8 @@ public:
         else {
             volume_ = relative_zero;
             type_ = 0;
+            price_ = 1;
+            description_ = "Empty bottle.";
             cout << "You poured the potion out, only little drops remain.\n";
         }
     }
@@ -107,17 +115,24 @@ public:
     const float get_volume() const { return volume_; }
     const int get_price() const { return price_; }
 
-    const void print_base() const { // cout included
+    const void print_ingredients() {
+        for (int i = 0; i < ingredients_.size(); i++) {
+            cout << ingredients_[i] << ' ';
+        }
+        cout << '\n';
+    }
+    const void print_base() { // cout included
         if (type_ == 0) {
-            cout << "Nothing but an air.\n";
+            cout << "[base] Nothing but an air.\n";
         }
         else {
-            cout << "Brewed with " + bases[type_].description + " as basic ingredient.\n"; 
+            cout << "[base] Brewed with " + bases[type_].description + " as basic ingredient.\n"; 
         }
     }
-    const void print_info() const {
+    const void print_info() {
         cout << get_label() << '\n' << get_description() << '\n';
         print_base();
+        print_ingredients();
         cout << "V: " << get_volume() << "\nC: " << get_price() << '\n';
     }
 };
@@ -125,10 +140,10 @@ public:
 int main() {
 
     try {
-        Potion N;
-        N.change_base();
+        Potion N("a", "aaa", 6, { "b","c"}, 0.2, 6);
         N.print_info();
-;
+        N.change_base();
+        N.print_ingredients();
     }
     catch (exception ex) {
         cout << ex.what();

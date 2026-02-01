@@ -138,9 +138,8 @@ public:
 };
 
 int main() {
-
     try {
-        Potion N("a", "aaa", 6, { "b","c"}, 0.2, 6);
+        Potion N;
         N.print_info();
         N.change_base();
         N.print_ingredients();

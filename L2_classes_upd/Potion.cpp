@@ -1,8 +1,5 @@
-#include <iostream>
-#include <string>
-#include <vector>
+#include "Potion.hpp"
 #include <random>
-using namespace std;
 
 struct Option {
     string description;
@@ -122,10 +119,10 @@ public:
         return *this;
     }
 
-    const string get_label() const { return label_; } // manual value return 
-    const string get_description() const { return description_; }
-    const float get_volume() const { return volume_; }
-    const int get_price() const { return price_; }
+    const string get_label() { return label_; } // manual value return 
+    const string get_description() { return description_; }
+    const float get_volume() { return volume_; }
+    const int get_price() { return price_; }
 
     const void print_ingredients() { // cout included
         for (int i = 0; i < ingredients_.size(); i++) {
@@ -148,7 +145,6 @@ public:
         cout << "V: " << get_volume() << "\nC: " << get_price() << "\n----------------\n";
     }
 
-protected:
     void set_price(int price) {
         if (price < 0) {
             throw invalid_argument("Price is less than 0.");
@@ -163,6 +159,8 @@ protected:
             volume_ = relative_zero;
             type_ = 0;
             price_ = 1;
+            ingredients_.clear();
+            ingredients_.push_back(bases[0].description);
             description_ = "Empty bottle.";
             cout << "You poured the potion out, only little drops remain.\n";
         }
@@ -193,18 +191,3 @@ protected:
         }
     }
 };
-
-
-int main() {
-
-    try {
-        Potion N("a", "aaa", { "b","c" }, 6, 0.6, 6);
-        Potion D("b", "bbb", { "v","w" }, 2, 0.3, 4);
-        //(N + D).print_info();
-        //(N += D).print_info();
-        (N*D).print_info();
-    }
-    catch (exception ex) {
-        cout << ex.what();
-    }
-}

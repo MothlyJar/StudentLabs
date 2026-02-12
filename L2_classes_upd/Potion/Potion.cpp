@@ -1,4 +1,5 @@
 #include "Potion.hpp"
+#include "Cattle_ingredients_base.hpp"
 #include <random>
 #include <iostream>
 #include <string>
@@ -36,7 +37,7 @@ void Potion::copy_base(const Potion& other) {
     ingredients_.push_back(bases[type_].description);
 }
 
-Potion::Potion() { //базовый
+Potion::Potion() { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     label_ = "Untitled";
     description_ = "Empty bottle.";
     ingredients_.push_back(bases[0].description);
@@ -46,7 +47,7 @@ Potion::Potion() { //базовый
     //cout << "[construct] You took an empty bottle.\n";
 }
 
-Potion::Potion(const Potion& other) { // копирование
+Potion::Potion(const Potion& other) { // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     label_ = other.label_;
     description_ = other.description_;
     ingredients_ = other.ingredients_;
@@ -55,7 +56,7 @@ Potion::Potion(const Potion& other) { // копирование
     type_ = other.type_;
     //cout << "[construct] You brewed exactly the same potion as before.\n";
 }
-Potion::Potion(string label, string descriprion, vector <string> ingredients, int type_of_base, float volume, int price) : //полного заполнения
+Potion::Potion(string label, string descriprion, vector <string> ingredients, int type_of_base, float volume, int price) : //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     label_(label), description_(descriprion), type_(type_of_base), ingredients_(ingredients), volume_(volume), price_(price) {
     ingredients_.push_back(bases[type_of_base].description);
     //cout << "[construct] You brewed new potion.\n";

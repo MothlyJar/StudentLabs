@@ -3,4 +3,7 @@ build
 .vs
 .vscode
 .sln
-.
+.obj
+.exe
+.ilk
+.pdb

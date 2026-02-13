@@ -2,13 +2,12 @@ cmake_minimum_required(VERSION 3.15) # Проверка версии CMake.
 									 # Если версия установленой программы
 									 # старее указаной, произайдёт аварийный выход.
 
-set(PROJECT_NAME Potion) 			 # задать значение PROJECT_NAME	
-# set(CMAKE_INSTALL_PREFIX ".." CACHE PATH "Installation directory")	 
+set(PROJECT_NAME PotionBasement) 			 # задать значение PROJECT_NAME		 
 project("${PROJECT_NAME}")           # установить имя проекта
 
 set(CMAKE_CXX_STANDARD 20)			 # устанавливаем 17 стандарт языка
 
 # Сказать программе, что должен быть исполняемый файл
-add_library("${PROJECT_NAME}" STATIC Potion.cpp Potion.hpp)
+add_executable("${PROJECT_NAME}" main.cpp)
 
-target_include_directories("${PROJECT_NAME}" PUBLIC Cattle)
+target_link_libraries("${PROJECT_NAME}" PRIVATE Cattle)

@@ -1,9 +1,38 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
 
-int rand_0_1();
+namespace ptn {
+struct Base {
+    int type;
+    string name;
+    string description;
+    const void print() {
+        cout << type << '. ' << name << ': ' << description << endl;
+    }
+};
+struct Ingredient {
+    string name;
+    string description;
+    string effect;
+    const void print() {
+        cout << name << ': ' << description << '. ' << effect << endl;
+    }
+};
+
+const int amount_of_bases = 8;
+inline const Base bases[amount_of_bases]{ //inline like pragma once
+    {0, "Air", "Nothing but an air"},
+    {1, "Water", "Translucent purified water"},
+    {2, "Orange juice", "Bright orange liquid with familiar citrus scent"},
+    {3, "Beer",""},
+    {4, "Unicorn's blood","Thick liquid thining with silver"},
+    {5, "Abyss","Black piece of something completely obsorbing the light"},
+    {6, "Head of Cerberus","Chopped off head of demonic dog quard"},
+    {7, "Set of unknown mushrooms","Bright colored couple of different mushrooms. Most likely pousonous"}
+};
 
 class Potion {
 private:
@@ -41,3 +70,4 @@ public:
     void drink();
     void change_base();  
 };
+}

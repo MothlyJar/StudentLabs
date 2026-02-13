@@ -1,53 +1,64 @@
 #include "Potion.hpp"
-#include "Cattle_ingredients_base.hpp"
 #include <random>
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
 
+namespace {
 int rand_0_1() {
-    random_device r_value;
-    mt19937_64 r_base(r_value());
-    uniform_int_distribution<> r_limit(0, 1);
+    std::random_device r_value;
+    std::mt19937_64 r_base(r_value());
+    std::uniform_int_distribution<> r_limit(0, 1);
     return r_limit(r_base);
 }
-
-void Potion::remove_ingredient(string what) {
-    auto t = remove(ingredients_.begin(), ingredients_.end(), what);
-    ingredients_.erase(t, ingredients_.end());
 }
-void Potion::merge_ingredients(const Potion& other) {
+
+void ptn::Potion::remove_ingredient(string what) {
+    for (size_t i = 0; i < ingredients_.size(); ++i) {
+        if (ingredients_[i] == what) {
+            ingredients_.erase(ingredients_.begin() + i);
+        }
+    }
+
+    const auto it = std::find(ingredients_.begin(), ingredients_.end(), what);
+    ingredients_.erase(it);
+
+
+    //auto t = remove(ingredients_.begin(), ingredients_.end(), what);
+    //ingredients_.erase(t, ingredients_.end());
+}
+void ptn::Potion::merge_ingredients(const Potion& other) {
     int f = 1;
-    for (int i = 0; i < other.ingredients_.size(); i++) {
+    for (size_t i = 0; i < other.ingredients_.size(); i++) {
         for (int j = 0; j < ingredients_.size(); j++) {
             if (ingredients_[j] == other.ingredients_[i]) {
-                ingredients_.push_back(other.ingredients_[i] + "(additional)");
+                ingredients_.emplace_back(other.ingredients_[i] + "(additional)");
                 f = 0;
             }
         }
         if (f == 1) {
-            ingredients_.push_back(other.ingredients_[i]);
+            ingredients_.emplace_back(other.ingredients_[i]);
         }
     }
 }
-void Potion::copy_base(const Potion& other) {
+void ptn::Potion::copy_base(const Potion& other) {
     remove_ingredient(bases[type_].description);
     type_ = other.type_;
-    ingredients_.push_back(bases[type_].description);
+    ingredients_.emplace_back(bases[type_].description);
 }
 
-Potion::Potion() { //�������
+ptn::Potion::Potion() { 
     label_ = "Untitled";
     description_ = "Empty bottle.";
-    ingredients_.push_back(bases[0].description);
+    ingredients_.emplace_back(bases[0].description);
     volume_ = relative_zero;
     price_ = 1;
     type_ = 0;
     //cout << "[construct] You took an empty bottle.\n";
 }
 
-Potion::Potion(const Potion& other) { // �����������
+ptn::Potion::Potion(const Potion& other) { // �����������
     label_ = other.label_;
     description_ = other.description_;
     ingredients_ = other.ingredients_;
@@ -56,16 +67,16 @@ Potion::Potion(const Potion& other) { // �����������
     type_ = other.type_;
     //cout << "[construct] You brewed exactly the same potion as before.\n";
 }
-Potion::Potion(string label, string descriprion, vector <string> ingredients, int type_of_base, float volume, int price) : //������� ����������
+ptn::Potion::Potion(string label, string descriprion, vector <string> ingredients, int type_of_base, float volume, int price) : //������� ����������
     label_(label), description_(descriprion), type_(type_of_base), ingredients_(ingredients), volume_(volume), price_(price) {
     ingredients_.push_back(bases[type_of_base].description);
     //cout << "[construct] You brewed new potion.\n";
 }
-Potion::~Potion() {
+ptn::Potion::~Potion() {
     ingredients_.clear();
     //cout << this << "[destruct] Your potion turned sour.";
 }
-Potion& Potion::operator+ (const Potion& other) {
+ptn::Potion& ptn::Potion::operator+ (const Potion& other) {
     if (rand_0_1()) {
         label_ = other.label_;
     }
@@ -77,7 +88,7 @@ Potion& Potion::operator+ (const Potion& other) {
     price_ += other.price_;
     return *this;
 }
-Potion& Potion::operator+= (const Potion& other) {
+ptn::Potion& ptn::Potion::operator+= (const Potion& other) {
     if (rand_0_1()) {
         label_ += " with addition of " + other.label_;
     }
@@ -89,7 +100,7 @@ Potion& Potion::operator+= (const Potion& other) {
     price_ += other.price_;
     return *this;
 }
-Potion& Potion::operator* (const Potion& other) {
+ptn::Potion& ptn::Potion::operator* (const Potion& other) {
     if (rand_0_1()) {
         copy_base(other);
     }
@@ -108,18 +119,18 @@ Potion& Potion::operator* (const Potion& other) {
     return *this;
 }
 
-const string Potion::get_label() { return label_; } // manual value return 
-const string Potion::get_description() { return description_; }
-const float Potion::get_volume() { return volume_; }
-const int Potion::get_price() { return price_; }
+const string ptn::Potion::get_label() { return label_; } // manual value return 
+const string ptn::Potion::get_description() { return description_; }
+const float ptn::Potion::get_volume() { return volume_; }
+const int ptn::Potion::get_price() { return price_; }
 
-const void Potion::print_ingredients() { // cout included
+const void ptn::Potion::print_ingredients() { // cout included
     for (int i = 0; i < ingredients_.size(); i++) {
         cout << ingredients_[i] << ' ';
     }
     cout << '\n';
 }
-const void Potion::print_base() {
+const void ptn::Potion::print_base() {
     if (type_ == 0) {
         cout << "[base] Nothing but an air.\n";
     }
@@ -127,20 +138,20 @@ const void Potion::print_base() {
         cout << "[base] Brewed with " + bases[type_].description + " as basic ingredient.\n";
     }
 }
-const void Potion::print_info() {
+const void ptn::Potion::print_info() {
     cout << "----------------\n" << get_label() << "\nDesc: " << get_description() << '\n';
     print_base();
     print_ingredients();
     cout << "V: " << get_volume() << "\nC: " << get_price() << "\n----------------\n";
 }
 
-void Potion::set_price(int price) {
+void ptn::Potion::set_price(int price) {
     if (price < 0) {
-        throw invalid_argument("Price is less than 0.");
+        throw std::invalid_argument("Price is less than 0.");
     }
     price_ = price;
 }
-void Potion::empty_the_glass() {
+void ptn::Potion::empty_the_glass() {
     if (volume_ <= relative_zero) {
         cout << "The glass is already empty.\n";
     }
@@ -154,7 +165,7 @@ void Potion::empty_the_glass() {
         cout << "You poured the potion out, only little drops remain.\n";
     }
 }
-void Potion::drink() {
+void ptn::Potion::drink() {
     if (volume_ <= relative_zero) {
         cout << "The glass is already empty.\n";
     }
@@ -163,13 +174,13 @@ void Potion::drink() {
         cout << "You open a bottle and make a tiny sip.\n";
     }
 }
-void Potion::change_base() {
+void ptn::Potion::change_base() {
     cout << "Please, choose the basic ingredient:\n";
-    option_print(bases, amount_of_bases, 1);
+
     int t;
     cin >> t;
-    if (!(1 <= t <= amount_of_bases)) {
-        throw invalid_argument("There're no such a base in our basement.");
+    if (!(1 <= t and t <= amount_of_bases)) {
+        throw std::invalid_argument("There're no such a base in our basement.");
     }
     else {
         remove_ingredient(bases[type_].description);

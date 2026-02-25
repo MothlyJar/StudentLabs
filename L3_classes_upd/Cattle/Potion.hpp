@@ -10,7 +10,7 @@ struct Base {
     string name;
     string description;
     const void print() {
-        cout << type << '. ' << name << ': ' << description << endl;
+        cout << type << ". " << name << ": " << description << endl;
     }
 };
 struct Ingredient {
@@ -18,7 +18,7 @@ struct Ingredient {
     string description;
     string effect;
     const void print() {
-        cout << name << ': ' << description << '. ' << effect << endl;
+        cout << name << ": " << description << ". " << effect << endl;
     }
 };
 

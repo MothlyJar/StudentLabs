@@ -38,15 +38,15 @@ void ptn::Potion::merge_ingredients(const Potion& other) {
     }
 }
 void ptn::Potion::copy_base(const Potion& other) {
-    remove_ingredient(bases[type_].description);
+    remove_ingredient(bases[type_].name);
     type_ = other.type_;
-    ingredients_.emplace_back(bases[type_].description);
+    ingredients_.emplace_back(bases[type_].name);
 }
 
 ptn::Potion::Potion() { 
     label_ = "Untitled";
     description_ = "Empty bottle.";
-    ingredients_.emplace_back(bases[0].description);
+    ingredients_.emplace_back(bases[0].name);
     volume_ = relative_zero;
     price_ = 1;
     type_ = 0;
@@ -64,7 +64,7 @@ ptn::Potion::Potion(const Potion& other) {
 }
 ptn::Potion::Potion(string label, string descriprion, vector <string> ingredients, int type_of_base, float volume, int price) : 
     label_(label), description_(descriprion), type_(type_of_base), ingredients_(ingredients), volume_(volume), price_(price) {
-    ingredients_.emplace_back(bases[type_of_base].description);
+    ingredients_.emplace_back(bases[type_of_base].name);
     //cout << "[construct] You brewed new potion.\n";
 }
 ptn::Potion::~Potion() {
@@ -132,14 +132,14 @@ const void ptn::Potion::print_base() {
         cout << "[base] Nothing but an air.\n";
     }
     else {
-        cout << "[base] Brewed with " + bases[type_].description + " as basic ingredient" << endl;
+        cout << "[base] Brewed with " + bases[type_].name + " as basic ingredient." << endl;
     }
 }
 const void ptn::Potion::print_info() {
-    cout << "----------------\n" << get_label() << "\nDesc: " << get_description() << endl;
+    cout << "----------------\n" << label_ << "\nDesc: " << get_description() << endl;
     print_base();
     print_ingredients();
-    cout << "V: " << get_volume() << "\nC: " << get_price() << "\n----------------" << endl;
+    cout << "V: " << volume_ << "\nC: " << price_ << "\n----------------" << endl;
 }
 
 void ptn::Potion::set_price(int price) {
@@ -163,7 +163,7 @@ void ptn::Potion::empty_the_glass() {
         type_ = 0;
         price_ = 1;
         ingredients_.clear();
-        ingredients_.emplace_back(bases[0].description);
+        ingredients_.emplace_back(bases[0].name);
         description_ = "Empty bottle.";
         cout << "You poured the potion out, only little drops remain." << endl;
     }
@@ -186,10 +186,10 @@ void ptn::Potion::change_base() {
         throw std::invalid_argument("There're no such a base in our basement.");
     }
     else {
-        remove_ingredient(bases[type_].description);
+        remove_ingredient(bases[type_].name);
         type_ = t;
-        ingredients_.emplace_back(bases[type_].description);
+        ingredients_.emplace_back(bases[type_].name);
         volume_ += 0.3;
-        cout << "You added " << bases[type_].description << " into your cattle. Now you have different potion." << endl;
+        cout << "You added " << bases[type_].name << " into your cattle. Now you have different potion." << endl;
     }
 }

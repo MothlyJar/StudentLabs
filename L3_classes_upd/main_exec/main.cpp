@@ -1,5 +1,6 @@
 #include <iostream>
-#include "C:\Users\USNikolaeva\Source\Repos\L3_classes_upd\Cattle\Cattle.hpp"
+#include <Potion.hpp>
+#include <Cattle.hpp>
 using namespace std;
 
 int main() {
@@ -8,7 +9,12 @@ int main() {
         ptn::Potion D("b", "bbb", { "v","w" }, 2, 0.3, 4);
         //(N + D).print_info();
         //(N += D).print_info();
-        (N*D).print_info();
+        //ptn::Cattle C;
+        ptn::Cattle F("Steel pod", 4, 10, 2, {"Water", "Maple leaves"});
+        //C.print_info();
+        F.print_info();
+        F.empty_the_cattle();
+        F.print_info();
     }
     catch (exception& ex) {
         cout << ex.what();

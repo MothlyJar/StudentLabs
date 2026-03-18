@@ -1,56 +1,54 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <Windows.h>
 #include <vector>
 
 void line_print(int index_start, int index_end) {
-    for(int i = index_start; i <= index_end; i++) {
-    std::cout << i << ' ' << char(i) << std::endl;
+    for (int i = index_start; i <= index_end; i++) {
+        std::cout << i << ' ' << char(i) << std::endl;
+    }
 }
-}
-void alphabet_print() { 
+void alphabet_print() {
     std::cout << "------\n";
-    line_print(39,90);
-    line_print(65+32,90+32);
-    line_print(128,175);
-    line_print(158+66,175+66);
+    line_print(39, 90);
+    line_print(-64, -1);
     std::cout << "------\n";
 }
 std::string sort_string(std::string s) {
     const int len = s.length();
-    std::vector<char> letters;
-    for (int i = 0; i <= len; i++) {
-        letters.emplace_back(s[i]);
-    }
-    for (int i = 0; i <= len - 1; ++i) {
-        for (int j = i + 1; j <= len; ++j) {
-            if(letters[i] > letters[j]){
+    std::string letters = s;
+    for (int i = 0; i < len; ++i) {
+        for (int j = i + 1; j < len; ++j) {
+            //std::cout << letters[j] << '.';
+            if (letters[i] > letters[j]) {
                 std::swap(letters[i], letters[j]);
             }
         }
     }
-    for (int i = 0; i <= len; i++) {
-        s[i] = letters[i];
-    }
-    return s;
+    //std::cout << s << ' ' << letters << std::endl;
+    return letters;
 }
-std::string lover_case(std::string& word) {
-    if (word[0] >= '†' && word[0] <= 'Ô') { return word;}
-    if (word[0] == '') {
-        word[0] = 'Ò';
+std::string lower_case(std::string& word) {
+    if (word[0] >= '–∞' && word[0] <= '—è') { return word; }
+    if (word[0] == '–Å') {
+        word[0] = '—ë';
     }
-    if (word[0] >= 'Ä' && word[0] <= 'è') {
+    if (word[0] >= '–ê' && word[0] <= '¬è–ü') {
         word[0] = char(word[0] + 32);
     }
-    if (word[0] >= 'ê' && word[0] <= 'ü') {
+    if (word[0] >= '¬ê–†' && word[0] <= '–Ø') {
         word[0] = char(word[0] + 80);
     };
     return word;
 }
-char gl[] = {'†', '•', 'Ò', '®', 'Æ', '„', 'Í', 'Î', 'Ï', 'Ì', 'Ó', 'Ô', 'Ä', 'Ö', '', 'à', 'é', 'ì', 'ö', 'õ', 'ú', 'ù', 'û', 'ü'};
+char gl[] = { '–∞', '–ê', '–µ', '–ï', '—ë', '–Å', '–∏', '–ò', '–æ', '–û', '—É', '–£', '—ä', '–™', '—ã', '–´', '–≠', '—ç', '–Æ', '—é', '–Ø', '—è¬ù', '—å', '–¨' };
 
 int main() {
-    //alphabet_print();
+    std::setlocale(LC_ALL, "Russian");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(CP_UTF8);
+    alphabet_print();
 
     std::ifstream text("text.txt");
     if (!text.is_open()) {
@@ -58,77 +56,91 @@ int main() {
     }
 
     // pt 1
+    /*
+    const int syll = 100;
+    char r_text[syll] = {};
+     for (int i = 0; i <=syll; i++) {
+         char t;
+         short f = 0;
+         text >> t;
+         for(int j = 0; j <=24; j++) {
+             if (t == gl[j]) {
+                 f = 1;
+                 continue;
+             }
+         }
+         if (f == 0) {
+             r_text[i] = t;
+         }
+     }
+     for (int i = 0; i <=syll - 1; i++) {
+         std::cout << r_text[i];
+     }
+     */
 
-    //const int syll = 100;
-    // char r_text[syll] = {syll*'0'};
-    // for (int i = 0; i <=syll; i++) {
-    //     char t;
-    //     short f = 0;
-    //     text >> t;
-    //     for(int j = 0; j <=24; j++) {
-    //         if (t == gl[j]) {
-    //             f = 1;
-    //             continue;
-    //         }
-    //     }
-    //     if (f == 0) {
-    //         r_text[i] = t;
-    //     }
-    // }
-    // for (int i = 0; i <=syll; i++) {
-    //     std::cout << r_text[i];
-    // }
-
-    //pt 2
-
-    std::vector<std::string> ra_text;
-    std::string st;
-    while(!text.eof()) {
-        text >> st;
-        ra_text.emplace_back(st);
+     //pt 2
+    size_t iden = 0;
+    std::ifstream text_leniden("text.txt");
+    std::string t;
+    while (!text_leniden.eof()) {
+        
+        text_leniden >> t;
+        iden++;
     }
-    std::vector<std::string> words; 
-    for (int i = 0; i <= ra_text.size(); i++) {// Æ‚°Æ‡ ·Æ‡‚®‡Æ¢†≠≠ÎÂ ® ·´Æ¢, ·≠Æ· ß≠†™† -
+    std::string* ra_text = new std::string[iden];
+    size_t length = 0;
+    while (!text.eof()) {
+        text >> ra_text[length];
+        length++;
+    }
+    for (int i = 0; i <= length - 1; ++i) { // √°√†¬†¬¢¬≠√Ø√¢√¨ ¬Ø¬•√†¬¢√´¬• ¬°√£¬™¬¢√´
+        ra_text[i] = lower_case(ra_text[i]);
+    }
+    size_t iden2 = 0;
+    std::string* words = new std::string[length];
+    for (int i = 0; i <= length - 1; i++) {// ¬Æ√¢¬°¬Æ√† √°¬Æ√†√¢¬®√†¬Æ¬¢¬†¬≠¬≠√´√• ¬® √°¬´¬Æ¬¢, √°¬≠¬Æ√° ¬ß¬≠¬†¬™¬† -
         if (i == 0 && ra_text[i][0] == '-') {
             ra_text[i].erase(0, 1);
         }
-        if (ra_text[i] == sort_string(ra_text[i])) {  
-            words.emplace_back(ra_text[i]);
+        if (ra_text[i] == sort_string(ra_text[i])) {
+            words[iden2] = ra_text[i];
+            iden2++;
         }
     }
-    for (int i = 0; i <= words.size() - 1; ++i) { // ·‡†¢≠Ô‚Ï Ø•‡¢Î• °„™¢Î
-        words[i] = lover_case(words[i]);
-    }
-    for (int i = 0; i <= words.size(); ++i) { //„°‡†‚Ï ØÆ¢‚Æ‡™®
-        for (int j = i + 1; j <= words.size(); ++j) {
+    //std::cout << '3' << iden2;
+    for (int i = 0; i < iden2; i++) {
+        for (int j = i + 1; j <= iden2; ++j) {
             if (words[i] == words[j]) {
-                words.erase(words.begin() + i);
+                words[j] = "";
             }
         }
     }
-    // ·´Æ¢† · '-' ¢ ·•‡•§®≠• ®´® Æ™†≠Á®¢†ÓÈ®•·Ô ≠† Ê®‰‡Î ≠• Ø‡ÆÂÆ§Ô‚ ¢ ´Ó°Æ¨ ·´„Á†•, 
-    // ¢•§Ï Æ≠® ≠• ¢Ø®Ë„‚·Ô ¢ „·´Æ¢®• †´‰†¢®‚≠Æ£Æ ØÆ‡Ô§™†, ØÆÌ‚Æ¨„ Æ‚§•´Ï≠Æ ®Â ¨Æ¶≠Æ ≠• Ø‡Æ¢•‡Ô‚Ï
-    for (int i = 0; i <= words.size() - 1; ++i) { // ·Æ‡‚®‡Æ¢™† ØÆ §´®≠•
-        for (int j = i + 1; j <= words.size(); ++j) {
-            if (words[i].length() < words[j].length()){
+
+    // √°¬´¬Æ¬¢¬† √° '-' ¬¢ √°¬•√†¬•¬§¬®¬≠¬• ¬®¬´¬® ¬Æ¬™¬†¬≠√ß¬®¬¢¬†√Æ√©¬®¬•√°√Ø ¬≠¬† √¶¬®√§√†√´ ¬≠¬• ¬Ø√†¬Æ√•¬Æ¬§√Ø√¢ ¬¢ ¬´√Æ¬°¬Æ¬¨ √°¬´√£√ß¬†¬•, 
+    // ¬¢¬•¬§√¨ ¬Æ¬≠¬® ¬≠¬• ¬¢¬Ø¬®√®√£√¢√°√Ø ¬¢ √£√°¬´¬Æ¬¢¬®¬• ¬†¬´√§¬†¬¢¬®√¢¬≠¬Æ¬£¬Æ ¬Ø¬Æ√†√Ø¬§¬™¬†, ¬Ø¬Æ√≠√¢¬Æ¬¨√£ ¬Æ√¢¬§¬•¬´√¨¬≠¬Æ ¬®√• ¬¨¬Æ¬¶¬≠¬Æ ¬≠¬• ¬Ø√†¬Æ¬¢¬•√†√Ø√¢√¨
+    for (int i = 0; i <= iden2 - 1; ++i) { // √°¬Æ√†√¢¬®√†¬Æ¬¢¬™¬† ¬Ø¬Æ ¬§¬´¬®¬≠¬•
+        for (int j = i + 1; j <= iden2; ++j) {
+            if (words[i].length() < words[j].length()) {
                 std::swap(words[i], words[j]);
             }
         }
     }
     std::ifstream amount("input.txt");
     int N;
-    amount >> N; 
+    std::string Nstr;
+    amount >> Nstr;
+    N = std::stoi(Nstr);
     std::ofstream output("result.txt");
-    for (int i = 0; i < N; ++i) {
+    for (int i = 0; (i < N) && (i < iden2); ++i) {
         output << words[i] << ' ';
     }
-
+    
     text.close();
+    delete[] words;
+    delete[] ra_text;
 
-       //////////////////// 
-    for (int i = 0; i <= words.size(); i++) {
-        std::cout << words[i] << ' ';
-    }
+    //////////////////// 
 
-return 0;
+
+    return 0;
 }

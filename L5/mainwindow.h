@@ -17,6 +17,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_Load_pB_clicked();
+
+    void on_ChooseFile_pB_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

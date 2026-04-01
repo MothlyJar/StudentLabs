@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="Load_pB">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>520</y>
+      <x>290</x>
+      <y>500</y>
       <width>181</width>
       <height>29</height>
      </rect>
@@ -45,63 +45,52 @@
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QScrollArea" name="scrollArea">
+    <widget class="QTreeWidget" name="treeWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>30</x>
        <y>20</y>
-       <width>621</width>
+       <width>601</width>
        <height>391</height>
       </rect>
      </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
      </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
+     <property name="columnCount">
+      <number>5</number>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>619</width>
-        <height>389</height>
-       </rect>
+     <attribute name="headerVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string notr="true">1</string>
       </property>
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>621</width>
-         <height>391</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="spacing">
-         <number>1</number>
-        </property>
-       </layout>
-      </widget>
-     </widget>
+     </column>
+     <column>
+      <property name="text">
+       <string notr="true">2</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string notr="true">3</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string notr="true">4</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string notr="true">5</string>
+      </property>
+     </column>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="ChooseFile_pB">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>520</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background: rgb(17, 124, 255)</string>
-    </property>
-    <property name="text">
-     <string>Выбрать файл</string>
-    </property>
    </widget>
    <widget class="QLabel" name="exceptions">
     <property name="geometry">

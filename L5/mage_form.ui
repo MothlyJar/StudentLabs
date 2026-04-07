@@ -61,33 +61,33 @@
   <widget class="QLabel" name="name">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>132</x>
      <y>20</y>
-     <width>63</width>
+     <width>131</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;TextLabel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="element">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>130</x>
      <y>50</y>
-     <width>101</width>
+     <width>131</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;TextLabel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="mana">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>240</x>
      <y>90</y>
      <width>81</width>
      <height>20</height>
@@ -103,7 +103,7 @@
   <widget class="QLabel" name="hp">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>90</x>
      <y>90</y>
      <width>63</width>
      <height>20</height>

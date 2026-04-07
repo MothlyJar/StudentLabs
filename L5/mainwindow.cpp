@@ -3,11 +3,11 @@
 #include <QTextStream>
 #include <QFileDialog>
 #include <vector>
-#include "characters.h"
+#include <characters.h>
 #include <QTreeWidgetItem>
-
-QString path_to_file;
 std::vector<Characters*> characters;
+QString path_to_file;
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -101,11 +101,11 @@ void MainWindow::on_Load_pB_clicked()
         }
         file.close();
     }
-    qInfo() << "Done";
 }
 
 
 void MainWindow::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column) {
-
+    int row = ui->treeWidget->indexFromItem(item).row();
+    characters[row]->Craft();
 }
 

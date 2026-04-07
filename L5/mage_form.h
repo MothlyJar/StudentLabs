@@ -1,5 +1,6 @@
 #ifndef MAGE_FORM_H
 #define MAGE_FORM_H
+#include "ui_mage_form.h"
 
 #include <QDialog>
 
@@ -16,7 +17,11 @@ public:
     ~mage_form();
 
 private slots:
-    void on_buttonBox_accepted();
+
+
+    void on_print_pB_clicked();
+
+    void on_exit_pB_clicked();
 
 private:
     Ui::mage_form *ui;

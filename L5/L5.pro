@@ -10,14 +10,12 @@ CONFIG += c++17
 
 SOURCES += \
     characters.cpp \
-    enemy_form.cpp \
     mage_form.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     characters.h \
-    enemy_form.h \
     mage_form.h \
     mainwindow.h
 

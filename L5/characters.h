@@ -20,6 +20,7 @@ public:
         health_ = health;
         armor_ = armor;
     };
+
     virtual ~Characters() = default;
     QString get_name() {return name_;}
     virtual int Craft() = 0;

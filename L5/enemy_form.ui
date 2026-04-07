@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ememy_form</class>
- <widget class="QDialog" name="ememy_form">
+ <class>enemy_form</class>
+ <widget class="QDialog" name="enemy_form">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>377</width>
-    <height>432</height>
+    <width>380</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="print_pB">
+  <widget class="QLabel" name="picture">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>370</y>
-     <width>141</width>
-     <height>31</height>
+     <x>100</x>
+     <y>120</y>
+     <width>161</width>
+     <height>231</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background: rgb(29, 150, 255);</string>
-   </property>
    <property name="text">
-    <string>Печать</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/carsds/pic_enemy_card.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="exit_pB">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>200</x>
      <y>370</y>
      <width>141</width>
      <height>31</height>
@@ -45,38 +42,12 @@
     <string>Отмена</string>
    </property>
   </widget>
-  <widget class="QLabel" name="picture">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>120</y>
-     <width>161</width>
-     <height>231</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/carsds/pic_enemy_card.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="name">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>20</y>
-     <width>63</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="hp">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>110</x>
      <y>50</y>
-     <width>63</width>
+     <width>131</width>
      <height>20</height>
     </rect>
    </property>
@@ -84,15 +55,44 @@
     <string notr="true">color:rgb(170, 0, 0)</string>
    </property>
    <property name="text">
-    <string>hp</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;TextLabel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="name">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>20</y>
+     <width>131</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;TextLabel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="print_pB">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>370</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: rgb(29, 150, 255);</string>
+   </property>
+   <property name="text">
+    <string>Печать</string>
    </property>
   </widget>
   <widget class="QLabel" name="armor">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>112</x>
      <y>80</y>
-     <width>81</width>
+     <width>151</width>
      <height>20</height>
     </rect>
    </property>

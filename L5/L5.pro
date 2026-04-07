@@ -10,17 +10,26 @@ CONFIG += c++17
 
 SOURCES += \
     characters.cpp \
+    enemy_form.cpp \
+    mage_form.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     characters.h \
+    enemy_form.h \
+    mage_form.h \
     mainwindow.h
 
 FORMS += \
+    enemy_form.ui \
+    mage_form.ui \
     mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    assets/assets.qrc

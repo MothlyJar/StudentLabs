@@ -1,7 +1,7 @@
 #ifndef CHARACTERS_H
 #define CHARACTERS_H
 
-#include <string>
+#include <QString>
 
 struct Armor {
     int helmet;
@@ -11,25 +11,26 @@ struct Armor {
 
 class Characters {
 protected:
-    std::string name_;
+    QString name_;
     int health_;
     Armor armor_;
 public:
-    Characters(std::string& name, int health, Armor armor) {
+    Characters(QString& name, int health, Armor armor) {
         name_ = name;
         health_ = health;
         armor_ = armor;
     };
-    std::string get_name() {return name_;}
-    virtual void Craft() = 0;
+    virtual ~Characters() = default;
+    QString get_name() {return name_;}
+    virtual int Craft() = 0;
 };
 
 class MageChara : public Characters {
 private:
-    std::string element_;
+    QString element_;
     int mana_;
 public:
-    MageChara(std::string& name, int health, Armor armor, std::string& element, int mana) : Characters(name, health, armor) {
+    MageChara(QString& name, int health, Armor armor, QString& element, int mana) : Characters(name, health, armor) {
         name_ = name;
         health_ = health;
         armor_ = armor;
@@ -37,14 +38,14 @@ public:
         mana_ = mana;
     };
     ~MageChara() = default;
-    void Craft() override;
+    int Craft() override;
 };
 class EnemyChara : public Characters {
 private:
-    std::string rareness_;
+    QString rareness_;
     int damage_;
 public:
-    EnemyChara(std::string& name, int health, Armor armor, std::string& rareness, int damage) : Characters(name, health, armor) {
+    EnemyChara(QString& name, int health, Armor armor, QString& rareness, int damage) : Characters(name, health, armor) {
         name_ = name;
         health_ = health;
         armor_ = armor;
@@ -52,7 +53,7 @@ public:
         damage_ = damage;
     };
     ~EnemyChara() = default;
-    void Craft() override;
+    int Craft() override;
 };
 
 #endif // CHARACTERS_H

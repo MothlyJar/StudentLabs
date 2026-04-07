@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QTreeWidgetItem>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -20,7 +21,7 @@ public:
 private slots:
     void on_Load_pB_clicked();
 
-    void on_ChooseFile_pB_clicked();
+    void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
 private:
     Ui::MainWindow *ui;

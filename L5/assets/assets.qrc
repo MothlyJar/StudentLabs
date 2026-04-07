@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/carsds">
+        <file>pic_enemy_card.png</file>
+        <file>pic_mage_card.png</file>
+    </qresource>
+</RCC>

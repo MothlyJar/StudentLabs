@@ -2,10 +2,9 @@
 #include "ui_mainwindow.h"
 #include <QTextStream>
 #include <QFileDialog>
-#include <vector>
 #include <characters.h>
 #include <QTreeWidgetItem>
-std::vector<Characters*> characters;
+
 QString path_to_file;
 
 
@@ -106,6 +105,6 @@ void MainWindow::on_Load_pB_clicked()
 
 void MainWindow::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column) {
     int row = ui->treeWidget->indexFromItem(item).row();
-    characters[row]->Craft();
+    characters[row]->Craft(row, item,this);
 }
 

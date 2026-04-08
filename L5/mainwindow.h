@@ -1,9 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <vector>
+//#include <characters.h>
 #include <QTreeWidgetItem>
 #include <QMainWindow>
-
+class Characters;
 
 
 QT_BEGIN_NAMESPACE
@@ -17,6 +18,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    std::vector<Characters*> characters;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

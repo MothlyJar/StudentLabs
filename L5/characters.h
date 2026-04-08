@@ -1,7 +1,8 @@
 #ifndef CHARACTERS_H
 #define CHARACTERS_H
-
+#include <QTreeWidgetItem>
 #include <QString>
+class MainWindow;
 
 struct Armor {
     int helmet;
@@ -23,7 +24,7 @@ public:
 
     virtual ~Characters() = default;
     QString get_name() {return name_;}
-    virtual int Craft() = 0;
+    virtual int Craft(int row, QTreeWidgetItem* item, MainWindow* mw) = 0;
 };
 
 class MageChara : public Characters {
@@ -39,7 +40,7 @@ public:
         mana_ = mana;
     };
     ~MageChara() = default;
-    int Craft() override;
+    int Craft(int row,  QTreeWidgetItem* item, MainWindow* mw) override;
 };
 class EnemyChara : public Characters {
 private:
@@ -54,7 +55,7 @@ public:
         damage_ = damage;
     };
     ~EnemyChara() = default;
-    int Craft() override;
+    int Craft(int row,  QTreeWidgetItem* item, MainWindow* mw) override;
 };
 
 #endif // CHARACTERS_H

@@ -1,19 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "fstream"
+#include <QFileDialog>
 #include "ext/json/json.hpp"
 using js= nlohmann::json;
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 
 
-// qstr qstr uint uint uint float
-QRegularExpression type("[А-ЯA-Z][а-яa-z]{1,}/[А-ЯA-Z][а-яa-z]{0,}/[1-9]\\d{0,}/[1-9]\\d{0,}/[1-9]\\d{0,}/[1-9]\\d{0,}.\\d{1,}");
 
 void furniture(std::string name, std::string desc, std::string legs, std::string hands, std::string drawers, std::string cost) {
-    std::ofstream right("right.json", std::ios::app);
-    std::ofstream wrong("wrong.json", std::ios::app);
-    QString data_check = QString("%1/%2/%3/%4/%5/%6").arg(name, desc, legs, hands, drawers, cost);
+    js all_data = js::array();
+    std::fstream file("file.json");
     js data = {
         {"name", name},
         {"desc", desc},
@@ -22,16 +20,9 @@ void furniture(std::string name, std::string desc, std::string legs, std::string
         {"drawers", drawers},
         {"cost", cost}
     };
-    if (type.match(data_check).hasMatch()) {
-        right << data;
-        right << '\n';
-        qInfo() << "right";
-    }
-    else {
-        wrong << data;
-        wrong << '\n';
-        qInfo() << "wrong";
-    }
+    all_data = js::parse(file);
+    all_data.emplace_back(data);
+    file << all_data.dump(4);
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -61,14 +52,40 @@ void MainWindow::on_ok_clicked()
 
 void MainWindow::on_browse_clicked()
 {
-    std::ifstream input("input.json");
-    js data = js::parse(input);
-    std::string name = data["name"].get<std::string>();
-    std::string desc = data["desc"].get<std::string>();
-    std::string legs = data["legs"].get<std::string>();
-    std::string hands = data["hands"].get<std::string>();
-    std::string drawers = data["drawers"].get<std::string>();
-    std::string cost = data["cost"].get<std::string>();
-    furniture(name, desc, legs, hands, drawers, cost);
-    ui->info->setText("Checked");
+    std::string path_to_file;
+    path_to_file = QFileDialog::getOpenFileName(this, "Выберите .txt файл","/home","*.txt").toStdString();
+    std::ifstream input(path_to_file);
+    std::string rs;
+    std::getline(input, rs);
+    QString s = QString::fromStdString(rs);
+    qInfo() << s;
+    if (s.isEmpty()) {
+        ui->info->setText("Empty file");
+    }
+    else {
+        QStringList values = s.split("/",Qt::SkipEmptyParts);
+        QString name;
+        QString desc;
+        QString legs;
+        QString hands;
+        QString drawers;
+        QString cost;
+        for(int variable_i = 0; variable_i < 6; ++variable_i) {
+            switch (variable_i) {
+            case 0: name = values[variable_i]; break;
+            case 1: desc = values[variable_i]; break;
+            case 2: legs = values[variable_i]; break;
+            case 3: hands = values[variable_i]; break;
+            case 4: drawers = values[variable_i]; break;
+            case 5: cost = values[variable_i]; break;
+            }
+        }
+        ui->name_le->setText(name);
+        ui->desc_le->setText(desc);
+        ui->legs_le->setText(legs);
+        ui->hands_le->setText(hands);
+        ui->drawers_le->setText(drawers);
+        ui->cost_le->setText(cost);
+        ui->info->setText("Checked");
+    }
 }

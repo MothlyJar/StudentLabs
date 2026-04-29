@@ -8,10 +8,14 @@
 #include "../L6/ext/json/json.hpp"
 using js= nlohmann::json;
 
+// qstr qstr uint uint uint float
+// QRegularExpression type("[а-яa-z]{1,}/[а-яa-z]{0,}/[1-9]\\d{0,}/[1-9]\\d{0,}/[1-9]\\d{0,}/[1-9]\\d{0,}.\\d{1,}");
+// QString data_check = QString("%1/%2/%3/%4/%5/%6").arg(name, desc, legs, hands, drawers, cost);
+
 int row_r = 1;
 int row_w = 1;
 std::string path_to_file;
-QRegularExpression str_e("[А-ЯA-Z][а-яa-z]{1,}/[А-ЯA-Z][а-яa-z]{0,}");
+QRegularExpression str_e("[А-ЯA-Zа-яa-z]{1,}/[А-ЯA-Zа-яa-z]{0,}");
 QRegularExpression uint_e("[1-9]\\d{0,}");
 QRegularExpression float_e("[1-9]\\d{0,}.\\d{1,}");
 QBrush red(QColor(255, 0, 0), Qt::SolidPattern);
@@ -33,14 +37,7 @@ void MainWindow::on_pushButton_clicked()
     path_to_file = QFileDialog::getOpenFileName(this, "Выберите .json файл","/home","*.json").toStdString();
     std::ifstream file(path_to_file);
     js all_data = js::array();
-    while(!file.eof()){
-        std::string s;
-        std::getline(file, s);
-        if (!s.empty()) {
-            all_data.emplace_back(js::parse(s));
-        }
 
-    }
     qInfo() << all_data.size();
 
     for (int i = 0; i < all_data.size(); ++i) {

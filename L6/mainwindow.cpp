@@ -3,39 +3,25 @@
 #include "fstream"
 #include <QFileDialog>
 #include "ext/json/json.hpp"
+#include "data_s.h"
 using js= nlohmann::json;
-#include <QRegularExpression>
-#include <QRegularExpressionMatch>
 
-
-
-void furniture(std::string name, std::string desc, std::string legs, std::string hands, std::string drawers, std::string cost) {
-    js all_data = js::array();
-    std::fstream file("file.json");
-    js data = {
-        {"name", name},
-        {"desc", desc},
-        {"legs", legs},
-        {"hands", hands},
-        {"drawers", drawers},
-        {"cost", cost}
-    };
-    all_data = js::parse(file);
-    all_data.emplace_back(data);
-    file << all_data.dump(4);
-}
+js all_data;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 void MainWindow::on_ok_clicked()
 {
@@ -45,7 +31,11 @@ void MainWindow::on_ok_clicked()
     std::string hands = ui->hands_le->text().toStdString();
     std::string drawers = ui->drawers_le->text().toStdString();
     std::string cost = ui->cost_le->text().toStdString();
-    furniture(name, desc, legs, hands, drawers, cost);
+
+    data_s data = data_s(name, desc, legs, hands, drawers, cost, nullptr);
+    data.q_total_info();
+    data.data_export("file.json", "file.json", all_data);
+
     ui->info->setText("Checked");
 }
 
@@ -58,7 +48,7 @@ void MainWindow::on_browse_clicked()
     std::string rs;
     std::getline(input, rs);
     QString s = QString::fromStdString(rs);
-    qInfo() << s;
+    //qInfo() << s;
     if (s.isEmpty()) {
         ui->info->setText("Empty file");
     }
@@ -80,12 +70,14 @@ void MainWindow::on_browse_clicked()
             case 5: cost = values[variable_i]; break;
             }
         }
+
         ui->name_le->setText(name);
         ui->desc_le->setText(desc);
         ui->legs_le->setText(legs);
         ui->hands_le->setText(hands);
         ui->drawers_le->setText(drawers);
         ui->cost_le->setText(cost);
+
         ui->info->setText("Checked");
     }
 }

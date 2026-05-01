@@ -13,6 +13,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
+    data_s.h \
     ext/json/json.hpp \
     mainwindow.h
 

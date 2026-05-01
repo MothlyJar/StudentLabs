@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>627</width>
-    <height>301</height>
+    <width>699</width>
+    <height>345</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Load data</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>260</y>
+      <x>300</x>
+      <y>300</y>
       <width>91</width>
       <height>24</height>
      </rect>
@@ -27,25 +27,85 @@
      <string>Выбрать .json</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="right">
+   <widget class="QTreeWidget" name="right">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>40</y>
-      <width>256</width>
-      <height>192</height>
+      <width>321</width>
+      <height>231</height>
      </rect>
     </property>
+    <column>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>5</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>6</string>
+     </property>
+    </column>
    </widget>
-   <widget class="QTableWidget" name="wrong">
+   <widget class="QTreeWidget" name="wrong">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>350</x>
       <y>40</y>
-      <width>256</width>
-      <height>192</height>
+      <width>321</width>
+      <height>231</height>
      </rect>
     </property>
+    <column>
+     <property name="text">
+      <string>1</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>3</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>5</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>6</string>
+     </property>
+    </column>
    </widget>
   </widget>
  </widget>
